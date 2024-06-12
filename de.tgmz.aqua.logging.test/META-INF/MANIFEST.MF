@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Bundle-SymbolicName: de.tgmz.aqua.logging.test
+Bundle-Version: 1.0.0.qualifier
+Require-Bundle: org.eclipse.core.runtime,
+ de.tgmz.aqua.logging.plugin,
+ org.junit,
+ org.slf4j.api
+Bundle-RequiredExecutionEnvironment: JavaSE-17
+Automatic-Module-Name: de.tgmz.aqua.logging.test
+Bundle-ActivationPolicy: lazy
