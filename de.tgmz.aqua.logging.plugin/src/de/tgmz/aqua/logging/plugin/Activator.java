@@ -6,6 +6,7 @@ import java.net.URL;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.ui.IStartup;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -19,7 +20,7 @@ import ch.qos.logback.core.joran.spi.JoranException;
 /**
  * The activator class controls the plug-in life cycle
  */
-public class Activator implements BundleActivator {
+public class Activator implements BundleActivator, IStartup {
 	// The plug-in ID
 	public static final String PLUGIN_ID = "de.tgmz.aqua.logging";
 
@@ -42,12 +43,6 @@ public class Activator implements BundleActivator {
 	@Override
 	public void start(BundleContext bundleContext) {
 		setContext(bundleContext);
-
-		try {
-			configureLogbackInBundle(bundleContext.getBundle());
-		} catch (JoranException | IOException e) {
-			Platform.getLog(context.getBundle()).error("Exception occurred while configuring logback", e);
-		}
 	}
 
 	/*
@@ -77,6 +72,15 @@ public class Activator implements BundleActivator {
 			Platform.getLog(bundle).info(String.format("SLF4J configuered with %s. ", lf.getClass().getName()));
 		} else {
 			Platform.getLog(bundle).info(String.format("SLF4J already configuered with %s. ", lf.getClass().getName()));
+		}
+	}
+
+	@Override
+	public void earlyStartup() {
+		try {
+			configureLogbackInBundle(context.getBundle());
+		} catch (JoranException | IOException e) {
+			Platform.getLog(context.getBundle()).error("Exception occurred while configuring logback", e);
 		}
 	}
 }
